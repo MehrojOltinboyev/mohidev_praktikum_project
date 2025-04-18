@@ -1,0 +1,96 @@
+{% extends 'news/base.html' %}
+{% load static %}
+
+{% block title %}Sport yangiliklari{% endblock title %}
+
+{% block content %}
+<style>
+    .news-section {
+        margin-top: 80px;
+        margin-bottom: 60px;
+    }
+
+    .card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+        overflow: hidden;
+        transition: transform 0.2s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 20px;
+    }
+
+    .card-title a {
+        color: #111;
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .card-title a:hover {
+        color: #007bff;
+    }
+
+    .card-text {
+        color: #555;
+        font-size: 0.95rem;
+        margin-top: 10px;
+        flex-grow: 1;
+    }
+
+    .news-date {
+        font-size: 0.8rem;
+        color: #888;
+        margin-top: 15px;
+    }
+</style>
+
+<div class="container news-section">
+    <h2 class="text-center mb-5">🏅 Sport yangiliklari</h2>
+
+    {% if sport_yangiliklari %}
+        <div class="row g-4">
+            {% for news in sport_yangiliklari %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100">
+                        {% if news.image %}
+                            <img src="{{ news.image.url }}" class="card-img-top" alt="{{ news.title }}">
+                        {% else %}
+                            <img src="{% static 'img/default.jpg' %}" class="card-img-top" alt="Default image">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{% url 'news_detail_page' news.slug %}">
+                                    {{ news.title|truncatewords:10 }}
+                                </a>
+                            </h5>
+                            <p class="card-text">{{ news.body|truncatewords:18 }}</p>
+                            <div class="news-date">{{ news.publish_time|date:"d-m-Y H:i" }}</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center">Hozircha sport yangiliklari mavjud emas.</p>
+    {% endif %}
+</div>
+{% endblock content %}

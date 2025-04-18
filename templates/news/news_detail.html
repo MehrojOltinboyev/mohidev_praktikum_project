@@ -1,0 +1,86 @@
+{% extends 'news/base.html' %}
+{% load static %}
+
+{% block title %}{{ news.title }}{% endblock title %}
+
+{% block content %}
+<style>
+    .news-detail-section {
+        margin-top: 80px;
+        margin-bottom: 60px;
+    }
+
+    .news-title {
+        font-size: 3rem; /* Katta sarlavha */
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 25px;
+        line-height: 1.3;
+    }
+
+    .news-meta {
+        font-size: 1rem; /* Katta meta ma'lumot */
+        color: #777;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+    }
+
+    .news-body {
+        font-size: 1.5rem; /* Body matn o'lchamini kattalashtirish */
+        line-height: 1.8;
+        color: #555;
+        margin-bottom: 40px;
+    }
+
+    .news-image {
+        width: 100%;
+        height: 450px;
+        object-fit: cover;
+        border-radius: 16px;
+        margin-bottom: 30px;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 40px;
+        padding: 12px 25px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .back-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .news-date {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #444;
+    }
+</style>
+
+<div class="container news-detail-section">
+    <h1 class="news-title">{{ news.title }}</h1>
+
+    <p class="news-meta">
+        Published on: {{ news.publish_time|date:"d-m-Y H:i" }} | Category: {{ news.category.name }}
+    </p>
+
+    {% if news.image %}
+        <img src="{{ news.image.url }}" alt="{{ news.title }}" class="news-image">
+    {% else %}
+        <img src="{% static 'img/default.jpg' %}" alt="Default image" class="news-image">
+    {% endif %}
+
+    <div class="news-body">
+        {{ news.body|linebreaksbr }}
+    </div>
+
+    <a href="{% url 'foreign_news_page' %}" class="back-btn">Back to News</a>
+</div>
+
+{% endblock content %}
