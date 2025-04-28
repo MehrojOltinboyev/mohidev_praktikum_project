@@ -1,0 +1,61 @@
+{% extends 'news/base.html' %}
+{% load static %}
+
+{% block title %} Foydalanuvchi profile {% endblock title %}
+
+{% block content %}
+
+    <!-- Xush kelibsiz qismi -->
+    <div style="text-align: center; margin-top: 20px;">
+        <h3 style="font-size: 2.5rem; color: #4CAF50; font-weight: bold;">Xush kelibsiz, {{ user.username }}</h3>
+        <h3>
+            <a href="{% url 'logout' %}" style="color: red; font-size: 1.2rem; text-decoration: none; font-weight: bold;">
+                Log out
+            </a>
+        </h3>
+    </div>
+
+    <!-- Profilni ko'rsatish -->
+    <div style="display: flex; justify-content: center; margin-top: 30px; gap: 40px;">
+
+        <!-- Rasmni aylana shaklida ko'rsatish -->
+        <div style="position: relative; overflow: hidden; flex-shrink: 0; border-radius: 50%; border: 4px solid #4CAF50;">
+            <img src="{{ profile.photo.url }}" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; transition: transform 0.3s ease;">
+        </div>
+
+        <!-- Foydalanuvchi ma'lumotlari jadvali -->
+        <div style="max-width: 500px; width: 100%; border-left: 2px solid #4CAF50; padding-left: 20px;">
+            <table style="width: 100%; font-size: 1.5rem; color: #555; border-spacing: 15px;">
+                <tr>
+                    <td style="font-weight: bold; padding-right: 15px;"><strong>Tug'ilgan yilingiz:</strong></td>
+                    <td>{{ profile.date_of_birth }}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold; padding-right: 15px;"><strong>Username:</strong></td>
+                    <td>{{ user.username }}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold; padding-right: 15px;"><strong>Email:</strong></td>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold; padding-right: 15px;"><strong>Ism:</strong></td>
+                    <td>{{ user.first_name }}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold; padding-right: 15px;"><strong>Familiya:</strong></td>
+                    <td>{{ user.last_name }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Parolni o'zgartirish va profilni tahrirlash havolalari -->
+    <div style="margin-top: 30px; text-align: center;">
+        <h4 style="font-size: 1.2rem;">
+            <a href="{% url 'password_change' %}" style="color: blue; text-decoration: none; padding: 10px; font-weight: bold;">Parolni almashtirish</a> |
+            <a href="{% url 'edit_user_information' %}" style="color: green; text-decoration: none; padding: 10px; font-weight: bold;">Profilni tahrirlash</a>
+        </h4>
+    </div>
+
+{% endblock content %}
